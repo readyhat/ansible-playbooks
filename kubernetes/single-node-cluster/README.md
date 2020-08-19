@@ -1,4 +1,4 @@
-# Deploy Single-Node Kubernetes Cluster
+# Deploy A Single-Node Kubernetes Cluster
 
 This playbook wil deploy a single-node Kubernetes "cluster" to a target machine and was developed to simplify deployment of development clusters quickly, frequently, and consistently.
 
