@@ -1,0 +1,7 @@
+---
+#TODO: explaing why we're disabling this...
+
+- name: Disabling SELinux...
+  selinux:
+    policy: targeted
+    state: permissive

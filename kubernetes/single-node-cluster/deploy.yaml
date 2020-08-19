@@ -1,0 +1,32 @@
+---
+# This playbook deploys a single-node Kubernetes cluster.
+
+- name: Install & configure a single-node Kubernetes cluster...
+  # Modify the `hosts` file with single-node target(s).
+  hosts: all
+
+  # The following roles provision a single-node Kubernetes cluster.
+  # NOTE: Order is important and should not be altered.
+  roles:
+    # Add Kubernetes to the yum repostiory.
+    - yum
+    # Set `selinux` to permissive. TODO: explain why this is necessary...
+    - selinux
+    # Enable, install, and configure the `cri-o` Kubernetes CRI.
+    - crio
+    # Install Kubernetes components and configure `cgroups` driver.
+    - kubernetes
+    # Configure Kubernetes networking bridge. TODO: Describe in better detail...
+    - networking
+    # Append the `systemd.unified_cgroup_hierarchy=0` to grube.
+    - bootloader
+    # TODO: Describe why this is necessary
+    - disable-swap
+    # Open Kubernetes API ports.
+    - firewall
+    # Reboot
+    - reboot
+    # Initialize the kubernetes cluster.
+    - init
+    # Deploy cluster networking.
+    - calico
