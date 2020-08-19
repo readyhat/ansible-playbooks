@@ -1,0 +1,21 @@
+---
+
+- name: Installing Kubernetes tools...
+  dnf:
+    name: 
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: present
+    disable_excludes: kubernetes
+
+- name: Enabling kubelet on boot...
+  service:
+    name: kubelet
+    enabled: yes
+
+- name: Writing cgroup driver to kubelet extra args...
+  copy:
+    dest: /etc/sysconfig/kubelet
+    content: |
+      KUBELET_EXTRA_ARGS=--cgroup-driver=systemd

@@ -1,0 +1,24 @@
+---
+#Enable the CRI-O CRI.
+
+- name: Enabling CRI-O dnf module...
+  command: dnf module enable -y cri-o:{{crio_version}}
+  args:
+    warn: False 
+
+- name: Installing CRI-O...
+  dnf:
+    name: cri-o
+    state: present
+
+- name: Enabling CRI-O on boot...
+  service:
+    name: cri-o
+    enabled: yes
+
+- name: Enabling required CRI-O boot modules...
+  copy:
+    dest: /etc/modules-load.d/crio-net.conf
+    content: |
+      overlay
+      br_netfilter

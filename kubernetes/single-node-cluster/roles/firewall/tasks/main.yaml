@@ -1,0 +1,15 @@
+---
+
+- name: Opening port 6443 for kubectl...
+  firewalld:
+    port: 6443/tcp
+    permanent: yes
+    immediate: yes
+    state: enabled
+# TODO: Describe mastter proxy port
+- name: Opening port 10250 for master proxy...
+  firewalld:
+    port: 10250/tcp
+    permanent: yes
+    immediate: yes
+    state: enabled
