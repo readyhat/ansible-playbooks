@@ -1,0 +1,20 @@
+---
+# Update grub bootloader.
+
+- name: Setting cgroup kernel argument...
+  template:
+    src: grub.j2
+    dest: /etc/default/grub
+
+- name: Checking for BIOS or UEFI firmware...
+  stat:
+    path: /sys/firmware/efi
+  register: efi_result
+
+- name: Ubdating BIOS grub...
+  shell: grub2-mkconfig -o /boot/grub2/grub.cfg
+  when: efi_result.stat.exists == False
+
+- name: Ubdating UEFI grub...
+  shell: grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+  when: efi_result.stat.exists == True
