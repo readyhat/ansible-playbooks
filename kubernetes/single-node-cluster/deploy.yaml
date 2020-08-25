@@ -1,6 +1,10 @@
 ---
 # This playbook deploys a single-node Kubernetes cluster.
 
+# TODO:
+#   - Modify for unprevileged execution via ssh (reboot requires -b for unpreiv)
+#   - Use grubby to modify bootloader instead of template.
+
 - name: Install & configure a single-node Kubernetes cluster...
   # Modify the `hosts` file with single-node target(s).
   hosts: all
