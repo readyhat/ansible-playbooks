@@ -23,7 +23,7 @@ This playbook wil deploy a single-node Kubernetes "cluster" to a target machine 
  1. Update the `hosts` file with the target node IP address or hostname.
  2. Execute the playbook with the following command: 
  ```bash
-$ ansible-playbook -i hosts deploy.yaml
+$ ansible-playbook -i hosts deploy.yaml --private-key /path/to/private/key.pem
 ```
  3. **Optional**: Retrieve the target `.kube/config` and append locally. 
  ```bash
