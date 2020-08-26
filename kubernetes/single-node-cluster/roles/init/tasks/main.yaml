@@ -1,22 +1,16 @@
 ---
 
 - name: Initializing cluster...
-  shell: kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=/var/run/crio/crio.sock >> cluster_intialized.txt
+  shell: kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=/var/run/crio/crio.sock >> cluster_init.log
   args:
     chdir: $HOME
-    creates: cluster_intialized.txt
+    creates: cluster_init.log
 
-- name: Creating Kubernetes home directory...
-  file:
-    path: $HOME/.kube
-    state: directory
-    mode: 0755
-
-- name: Copying config to ~/.kube/config...
-  copy:
+- name: Pulling remote cluster configuration...
+  fetch: 
     src: /etc/kubernetes/admin.conf
-    dest: $HOME/.kube/config
-    remote_src: yes
+    dest: "{{ kubeconfig | default('./kube.conf') }}"
+    flat: yes
 
 - name: Removing taint from master (only) node...
   command: kubectl taint nodes --all node-role.kubernetes.io/master-
