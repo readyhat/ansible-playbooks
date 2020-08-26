@@ -1,7 +1,5 @@
 ---
 
-# - name: Initialize cluster...
-#   command: kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=/var/run/crio/crio.sock
 - name: Initializing cluster...
   shell: kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=/var/run/crio/crio.sock >> cluster_intialized.txt
   args:
