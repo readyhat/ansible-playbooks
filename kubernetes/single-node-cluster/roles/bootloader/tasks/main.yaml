@@ -1,20 +1,5 @@
 ---
-# Update grub bootloader.
+# Update grub bootloader cgroup hierarchy.
 
-- name: Setting cgroup kernel argument...
-  template:
-    src: grub.j2
-    dest: /etc/default/grub
-
-- name: Checking for BIOS or UEFI firmware...
-  stat:
-    path: /sys/firmware/efi
-  register: efi_result
-
-- name: Ubdating BIOS grub...
-  shell: grub2-mkconfig -o /boot/grub2/grub.cfg
-  when: efi_result.stat.exists == False
-
-- name: Ubdating UEFI grub...
-  shell: grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
-  when: efi_result.stat.exists == True
+- name: Setting cgroup kernel arguments...
+  shell: grubby --args 'systemd.unified_cgroup_hierarchy=0' --update-kernel $(grubby --default-kernel)
