@@ -4,9 +4,11 @@
 - name: Install & configure a single-node Kubernetes cluster...
   # Modify the `hosts` file with single-node target(s).
   hosts: all
+  # Escalate privileges with `sudo`
+  become: true
 
   # The following roles provision a single-node Kubernetes cluster.
-  # NOTE: Order is important and should not be altered.
+  # Order is important and should not be altered.
   roles:
     # Add Kubernetes to the yum repostiory.
     - yum
